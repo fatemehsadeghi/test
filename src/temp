@@ -1,0 +1,149 @@
+
+  import depositType.DepositType;
+  import deposits.Deposit;
+  import exception.DepositTypeNotFound;
+  import exception.WrongDepositBalance;
+  import exception.WrongDurationInDayValue;
+  import interest.DepositInterest;
+  import org.w3c.dom.Document;
+  import org.w3c.dom.Element;
+  import org.w3c.dom.NodeList;
+  import org.xml.sax.SAXException;
+
+  import javax.xml.parsers.DocumentBuilder;
+  import javax.xml.parsers.DocumentBuilderFactory;
+  import javax.xml.parsers.ParserConfigurationException;
+  import java.awt.*;
+  import java.io.File;
+  import java.io.IOException;
+  import java.math.BigDecimal;
+  import java.util.*;
+  import java.util.List;
+
+  import static depositType.DepositType.interestRate;
+
+  /**
+   * Created by dotinschool1 on 4/9/2017.
+   */
+  public class MyXml {
+      private int rate;
+      TreeMap<BigDecimal,Deposit> depositL=new TreeMap<BigDecimal,Deposit>();
+      NodeList nodeList;
+      Element docElement;
+      Deposit deposit = new Deposit();
+      List<Deposit> depositList = new ArrayList<Deposit>();
+      DepositInterest depositInterest = new DepositInterest();
+
+      public List<Deposit>  parseXmlFile() throws ParserConfigurationException, IllegalAccessException
+              , DepositTypeNotFound, InstantiationException, WrongDepositBalance,
+                WrongDurationInDayValue, ClassNotFoundException {
+          try {
+              File input = new File("Deposit.xml");
+              DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+              DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+              Document document = documentBuilder.parse(input);
+              Element docElement = document.getDocumentElement();
+              nodeList = docElement.getElementsByTagName("deposit");
+              if (nodeList != null && nodeList.getLength() > 0)
+              for (int i = 0; i < nodeList.getLength(); i++) {
+                  String customerNumber = docElement.getElementsByTagName("customerNumber").item(i).getTextContent();
+                  deposit.setCustomerNumber(customerNumber);
+                  String depositTypeStr = docElement.getElementsByTagName("depositType").item(i).getTextContent();
+                  try {
+                      Class<?> c = Class.forName(depositTypeStr);
+                      DepositType depositType = (depositType.DepositType) c.newInstance();
+                      rate = depositType.getInterestRate();
+                      System.out.println("interest rate is" + depositType.getInterestRate());
+                  } catch (ClassNotFoundException e) {
+                      throw new DepositTypeNotFound("");
+                  }
+                  BigDecimal depositBalance = new BigDecimal(docElement.getElementsByTagName("depositBalance").item(i).getTextContent());
+                  if (depositBalance.signum() < 0)
+                      throw new WrongDepositBalance("depositBalance can`t be negative");
+                  deposit.setDepositBalance(depositBalance);
+                  int durationInDays = Integer.parseInt(docElement.getElementsByTagName("durationInDays").item(i).getTextContent());
+                  if (durationInDays <= 0)
+                      throw new WrongDurationInDayValue("durationInDays can`t be zero or negative");
+                  deposit.setDurationInDays(durationInDays);
+                  ///////////////////////////////
+                  System.out.println(customerNumber);
+                  //System.out.println("!!!!!!"+deposit.getInterestRate());
+                  System.out.println("!!!!!!!!!"+deposit.getCustomerNumber());
+                  System.out.println("----------"+deposit.getDepositBalance());
+                  System.out.println("---------"+deposit.getDurationInDays());
+                  Deposit deposit = new Deposit(customerNumber ,rate , depositBalance , durationInDays);
+                  depositList.add(deposit);
+                  for (int j=0 ; j<depositList.size() ; j ++){
+                      System.out.println(deposit.getDurationInDays()+ "" + deposit.getDepositBalance()+ "");
+                  }
+              }
+
+          } catch (ParserConfigurationException e) {
+          } catch (IOException e) {
+              e.printStackTrace();
+          } catch (SAXException e) {
+              e.printStackTrace();
+          }
+          return depositList;
+      }
+
+      //private void deposit(String customerNumber, int rate, BigDecimal depositBalance, int durationInDays) {}
+
+      public void writeToOutput() {
+
+      }
+  }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+   public BigDecimal calculatePayedInterest(){
+          payedInterest =payedInterest.multiply(new BigDecimal(durationInDays)).multiply(depositBalance).multiply(new BigDecimal(interestRate));
+          System.out.println(payedInterest);
+          System.out.println(interestRate);
+          payedInterest=payedInterest.divide(new BigDecimal(days), MathContext.DECIMAL32);
+          System.out.println(payedInterest);
+          return payedInterest;
+      }
+
+
+
+    public Deposit() {
+    }
+    public int getDays() {
+        return days;
+    }
+
+    public BigDecimal getPayedInterest() {
+        return payedInterest;
+    }
+
+    public void setPayedInterest(BigDecimal payedInterest) {
+        this.payedInterest = payedInterest;
+    }
+
+    public BigDecimal getDepositBalance() {
+        return depositBalance;
+    }
+
+    public void setDepositBalance(BigDecimal depositBalance) {
+        this.depositBalance = depositBalance;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    public int getDurationInDays() {
+        return durationInDays;
+    }
+
+    public void setDurationInDays(int durationInDays) {
+        this.durationInDays = durationInDays;
+    }
