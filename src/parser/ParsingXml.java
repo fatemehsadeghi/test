@@ -5,7 +5,6 @@ import deposits.Deposit;
 import exception.DepositTypeNotFound;
 import exception.WrongDepositBalance;
 import exception.WrongDurationInDayValue;
-import interest.DepositInterest;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
