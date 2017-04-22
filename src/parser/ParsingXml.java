@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -29,11 +30,18 @@ public class ParsingXml{
     BigDecimal tempPayedInterest;
     String customerNumber;
     public Document parseXmlFile() throws ParserConfigurationException, IOException, SAXException {
-        File inputXml = new File("Deposit.xml");
+
+        RandomAccessFile inputXml = new RandomAccessFile("Deposit.xml" , "r");
+        inputXml.length();
+        for(int f =0 ; f<inputXml.length();f++)
+        {
+
+        }
+
+        File inputXml1 = new File("Deposit.xml");
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.parse(inputXml);
-        //System.out.println("doc is " +document);
+        Document document = documentBuilder.parse(inputXml1);
         return document;
     }
     public TreeMap<BigDecimal, String> parseDocument(Document document) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
@@ -41,18 +49,19 @@ public class ParsingXml{
         nodeList = docElement.getElementsByTagName("deposit");
         if (nodeList != null && nodeList.getLength() > 0) {
             for (int i = 0; i < nodeList.getLength(); i++) {
+                int j = i+1;
                 customerNumber = docElement.getElementsByTagName("customerNumber").item(i).getTextContent();
                 String depositTypeStr = docElement.getElementsByTagName("depositType").item(i).getTextContent();
                 String depositTypeStrConcat = "depositType."+depositTypeStr;
                 try {
-                    Class<?> c = Class.forName(depositTypeStrConcat);
-                    DepositType depositType = (depositType.DepositType)c.newInstance();
+                    Class depositTypeClass = Class.forName(depositTypeStrConcat);
+                    Object f = depositTypeClass.newInstance();
+                    DepositType depositType = (depositType.DepositType)depositTypeClass.newInstance();
                     tempInterestRate = depositType.getInterestRate();
                     deposit.setTempInterestRate(tempInterestRate);
-                    // System.out.println("interest rate is" + depositType.getInterestRate() + deposit.getTempInterestRate());
                 } catch (ClassNotFoundException e) {
                     try {
-                        throw new DepositTypeNotFound("");
+                        throw new DepositTypeNotFound("depositType Not found at " +j+ "th deposit");
                     } catch (DepositTypeNotFound depositTypeNotFound) {
                         depositTypeNotFound.printStackTrace();
                     }
@@ -60,53 +69,33 @@ public class ParsingXml{
                 BigDecimal depositBalance = new BigDecimal(docElement.getElementsByTagName("depositBalance").item(i).getTextContent());
                 if (depositBalance.signum() < 0)
                     try {
-                        throw new WrongDepositBalance("depositBalance can`t be negative");
+                        throw new WrongDepositBalance("depositBalance can`t be negative at "+j+"th deposit");
                     } catch (WrongDepositBalance wrongDepositBalance) {
                         wrongDepositBalance.printStackTrace();
                     }
-                // deposit.setDepositBalance(depositBalance);
                 int durationInDays = Integer.parseInt(docElement.getElementsByTagName("durationInDays").item(i).getTextContent());
                 if (durationInDays <= 0)
                     try {
-                        throw new WrongDurationInDayValue("durationInDays can`t be zero or negative");
+                        throw new WrongDurationInDayValue("durationInDays can`t be zero or negative at 	"+j+"th deposit");
                     } catch (WrongDurationInDayValue wrongDurationInDayValue) {
                         wrongDurationInDayValue.printStackTrace();
                     }
                 Deposit deposit = new Deposit(customerNumber,tempInterestRate,depositBalance , durationInDays);
                 tempPayedInterest= deposit.calculatePayedInterest(deposit);
-                //System.out.println(tempPayedInterest);
-                //Deposit deposit = new Deposit(customerNumber,rate,depositBalance , durationInDays);
-                //depositList.add(deposit);
-                // System.out.println("size is " + depositList.size());
                 customerNumberMap.put (tempPayedInterest,customerNumber);
                 depositMap.put( tempPayedInterest,deposit);
-               // System.out.println("my key" + "/t "+depositMap.descendingMap());
             }
-            customerNumberMap.descendingMap();
             depositMap.descendingMap();
-            for (Map.Entry<BigDecimal ,String > entry : customerNumberMap.descendingMap().entrySet()) {
-                System.out.println( entry.getValue()+ "# " + entry.getKey() + "\n" );
-            }
         }return customerNumberMap;
     }
 
     public void writeOnFile(TreeMap<BigDecimal ,String> customerNumberMap) throws IOException {
-
-        FileOutputStream outputFile = new FileOutputStream("Output.xml");
-        ObjectOutputStream outputStream = new ObjectOutputStream(outputFile);
+        RandomAccessFile outputFile = new RandomAccessFile("Output.xml" , "rw");
         for (Map.Entry<BigDecimal ,String > entry : customerNumberMap.descendingMap().entrySet()) {
-            outputStream.writeUnshared(entry.getValue() + "# " + entry.getKey() + "\n");
+            System.out.println( entry.getValue()+ "# " + entry.getKey() + "\n" );
+            outputFile.writeUTF(String.valueOf(entry.getValue()) +"# " +String.valueOf( entry.getKey()) + "\n" );
         }
-
-/*
-        FileWriter fw = new FileWriter("Output.txt");
-        BufferedWriter bw = new BufferedWriter(fw);
-        for (Map.Entry<BigDecimal ,String > entry : customerNumberMap.descendingMap().entrySet()) {
-            bw.write(entry.getValue() + "# " + entry.getKey() + "\n");
-        }
-        System.out.println("File written Successfully");
-*/
-        outputStream.close();
-
+        outputFile.seek( outputFile.getFilePointer());
+        outputFile.close();
     }
 }

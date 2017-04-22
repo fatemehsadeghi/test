@@ -61,55 +61,15 @@ public class Deposit {
     }
     public BigDecimal calculatePayedInterest(Deposit deposit) {
         ParsingXml p = new ParsingXml();
-        //TreeMap<BigDecimal, Deposit> depositMap = new TreeMap();
         final int days = 6500;
         BigDecimal payedInterest = new BigDecimal(1);
         payedInterest = payedInterest.multiply(new BigDecimal(deposit.getDurationInDays())).multiply(deposit.getDepositBalance()).multiply(new BigDecimal(deposit.getTempInterestRate()));
-        System.out.println(payedInterest);
+
         payedInterest = payedInterest.divide(new BigDecimal(days), MathContext.DECIMAL64);
-        System.out.println(" PAYE IS " + payedInterest);
-        //p.setV(payedInterest);
-        // depositMap.put(payedInterest, (Deposit) deposit);
-        // System.out.println("my key" + "/t "+depositMap.ceilingEntry(payedInterest));
+
         return payedInterest;
 
     }
 
-    /*
-    public Map<BigDecimal, Deposit> cal (Deposit deposit) {
-        TreeMap<BigDecimal, Deposit> depositMap = new TreeMap();
-        final int days = 6500;
-        BigDecimal payedInterest = new BigDecimal(1);
-        payedInterest = payedInterest.multiply(new BigDecimal(deposit.getDurationInDays())).multiply(deposit.getDepositBalance()).multiply(new BigDecimal(deposit.getTempInterestRate()));
-        System.out.println(payedInterest);
-        payedInterest = payedInterest.divide(new BigDecimal(days), MathContext.DECIMAL64);
-        System.out.println(" PAYE IS " + payedInterest);
-        depositMap.put(payedInterest, (Deposit) deposit);
-        return depositMap;
 
-        // System.out.println("my key" + "/t "+depositMap.ceilingEntry(payedInterest));
-    }
-    */
-    /*
-    public static <K, V> void printMap(Map<K, V> map) {
-        for (Map.Entry<K, V> entry : map.entrySet()) {
-            System.out.println("Key : " + entry.getKey()
-                    + " Value : " + entry.getValue());
-        }
-    }
-    */
-/*
-    public TreeMap sortDepositMap(TreeMap depositMap) {
-        TreeMap<BigDecimal, Deposit> sorted = new TreeMap<BigDecimal, Deposit>(depositMap);
-        System.out.println("Sorted Map: " + Arrays.toString(sorted.entrySet().toArray()));
-        Set set = depositMap.keySet();
-        System.out.println("Value is: " + set);
-        for (int i = 0; i < sorted.size(); i++) {
-            Deposit deposit = sorted.get(i);
-            System.out.println(deposit.getCustomerNumber() + "#" + sorted.get(payedInterest));
-
-        }
-        return sorted;
-    }
-    */
 }

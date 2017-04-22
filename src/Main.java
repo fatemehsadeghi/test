@@ -2,7 +2,6 @@ import deposits.Deposit;
 import exception.DepositTypeNotFound;
 import exception.WrongDepositBalance;
 import exception.WrongDurationInDayValue;
-import interest.DepositInterest;
 import org.xml.sax.SAXException;
 import parser.ParsingXml;
 
