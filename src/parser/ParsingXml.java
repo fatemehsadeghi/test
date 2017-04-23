@@ -14,21 +14,17 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.*;
 
 public class ParsingXml{
     public ParsingXml() {
     }
-    private int durationInDays;
-    private int tempInterestRate;
     NodeList nodeList;
     TreeMap<BigDecimal, Deposit> depositMap= new TreeMap();
     TreeMap<BigDecimal, String> customerNumberMap= new TreeMap();
     Deposit deposit = new Deposit();
     BigDecimal tempPayedInterest;
-    String customerNumber;
     public Document parseXmlFile() throws ParserConfigurationException, IOException, SAXException {
 
         RandomAccessFile inputXml = new RandomAccessFile("Deposit.xml" , "r");
@@ -50,15 +46,23 @@ public class ParsingXml{
         if (nodeList != null && nodeList.getLength() > 0) {
             for (int i = 0; i < nodeList.getLength(); i++) {
                 int j = i+1;
-                customerNumber = docElement.getElementsByTagName("customerNumber").item(i).getTextContent();
-                String depositTypeStr = docElement.getElementsByTagName("depositType").item(i).getTextContent();
-                String depositTypeStrConcat = "depositType."+depositTypeStr;
+                deposit.setCustomerNumber(docElement.getElementsByTagName("customerNumber").item(i).getTextContent());
+                String depositTypeStr = "depositType."+ docElement.getElementsByTagName("depositType").item(i).getTextContent();
                 try {
-                    Class depositTypeClass = Class.forName(depositTypeStrConcat);
-                    Object f = depositTypeClass.newInstance();
+                    Class depositTypeClass = Class.forName(depositTypeStr);
+                   // Object f = depositTypeClass.newInstance();
                     DepositType depositType = (depositType.DepositType)depositTypeClass.newInstance();
-                    tempInterestRate = depositType.getInterestRate();
-                    deposit.setTempInterestRate(tempInterestRate);
+                    //tempInterestRate = depositType.getInterestRate();
+                    //deposit.setTempInterestRate(tempInterestRate);
+                    deposit.setDepositType(depositType);
+                    /*
+                    Class<?> clazz = Class.forName(depositTypeStr);
+                    Method method = clazz.getDeclaredMethod("getInterestRate");
+                    Object obj = clazz.newInstance();
+                   int a = (int) method.invoke(obj);
+                    deposit.setDepositType(Object obj);
+                    System.out.println("1111111111111111111" +a);
+*/
                 } catch (ClassNotFoundException e) {
                     try {
                         throw new DepositTypeNotFound("depositType Not found at " +j+ "th deposit");
@@ -73,6 +77,7 @@ public class ParsingXml{
                     } catch (WrongDepositBalance wrongDepositBalance) {
                         wrongDepositBalance.printStackTrace();
                     }
+                deposit.setDepositBalance(depositBalance);
                 int durationInDays = Integer.parseInt(docElement.getElementsByTagName("durationInDays").item(i).getTextContent());
                 if (durationInDays <= 0)
                     try {
@@ -80,9 +85,9 @@ public class ParsingXml{
                     } catch (WrongDurationInDayValue wrongDurationInDayValue) {
                         wrongDurationInDayValue.printStackTrace();
                     }
-                Deposit deposit = new Deposit(customerNumber,tempInterestRate,depositBalance , durationInDays);
+                deposit.setDurationInDays(durationInDays);
                 tempPayedInterest= deposit.calculatePayedInterest(deposit);
-                customerNumberMap.put (tempPayedInterest,customerNumber);
+                customerNumberMap.put (tempPayedInterest,deposit.getCustomerNumber());
                 depositMap.put( tempPayedInterest,deposit);
             }
             depositMap.descendingMap();
@@ -90,12 +95,16 @@ public class ParsingXml{
     }
 
     public void writeOnFile(TreeMap<BigDecimal ,String> customerNumberMap) throws IOException {
-        RandomAccessFile outputFile = new RandomAccessFile("Output.xml" , "rw");
+        RandomAccessFile outputFile = new RandomAccessFile("Output.txt" , "rw");
         for (Map.Entry<BigDecimal ,String > entry : customerNumberMap.descendingMap().entrySet()) {
             System.out.println( entry.getValue()+ "# " + entry.getKey() + "\n" );
             outputFile.writeUTF(String.valueOf(entry.getValue()) +"# " +String.valueOf( entry.getKey()) + "\n" );
         }
         outputFile.seek( outputFile.getFilePointer());
         outputFile.close();
+    }
+    public static  void main (String[] aegs) throws IOException, SAXException, ParserConfigurationException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        ParsingXml p = new ParsingXml();
+        p.parseDocument(p.parseXmlFile());
     }
 }

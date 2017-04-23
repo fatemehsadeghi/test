@@ -3,28 +3,16 @@ package deposits;
 import depositType.DepositType;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.*;
-import  parser.*;
 
 /**
  * Created by dotinschool1 on 4/10/2017.
  */
 public class Deposit {
 
-    BigDecimal payedInterest = new BigDecimal(1);
     private String customerNumber;
-    DepositType depositType = new DepositType();
+    DepositType depositType ;
     private BigDecimal depositBalance;
     private int durationInDays;
-    private int tempInterestRate = depositType.getInterestRate();
-
-    public int getTempInterestRate() {
-        return tempInterestRate;
-    }
-
-    public void setTempInterestRate(int tempInterestRate) {
-        this.tempInterestRate = tempInterestRate;
-    }
 
     public String getCustomerNumber() {
         return customerNumber;
@@ -50,26 +38,29 @@ public class Deposit {
         this.durationInDays = durationInDays;
     }
 
+    public DepositType getDepositType() {
+        return depositType;
+    }
+
+    public void setDepositType(DepositType depositType) {
+        this.depositType = depositType;
+    }
+
     public Deposit() {
     }
 
-    public Deposit(String customerNumber, int tempInterestRate, BigDecimal depositBalance, int durationInDays) {
-        this.tempInterestRate = tempInterestRate;
+    public Deposit(String customerNumber, BigDecimal depositBalance, int durationInDays, DepositType depositType) {
         this.customerNumber = customerNumber;
         this.depositBalance = depositBalance;
         this.durationInDays = durationInDays;
+        this.depositType = depositType;
     }
     public BigDecimal calculatePayedInterest(Deposit deposit) {
-        ParsingXml p = new ParsingXml();
         final int days = 6500;
         BigDecimal payedInterest = new BigDecimal(1);
-        payedInterest = payedInterest.multiply(new BigDecimal(deposit.getDurationInDays())).multiply(deposit.getDepositBalance()).multiply(new BigDecimal(deposit.getTempInterestRate()));
-
+        payedInterest = payedInterest.multiply(new BigDecimal(deposit.getDurationInDays()))
+                .multiply(deposit.getDepositBalance()).multiply(new BigDecimal(deposit.depositType.getInterestRate()));
         payedInterest = payedInterest.divide(new BigDecimal(days), MathContext.DECIMAL64);
-
         return payedInterest;
-
     }
-
-
 }

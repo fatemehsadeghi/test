@@ -1,4 +1,3 @@
-import deposits.Deposit;
 import exception.DepositTypeNotFound;
 import exception.WrongDepositBalance;
 import exception.WrongDurationInDayValue;
@@ -7,8 +6,6 @@ import parser.ParsingXml;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.*;
 
 public class Main {
 
