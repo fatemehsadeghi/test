@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Comparator;
 
-public class Deposit implements Comparator{
+public class Deposit {
 
     private String customerNumber;
     private DepositType depositType ;
@@ -65,13 +65,5 @@ public class Deposit implements Comparator{
             //deposit.setPayedInterest(payedInterest);
             System.out.println(payedInterest +"ali" + durationInDays + "abbas "+depositBalance );
         return deposit;
-    }
-
-    @Override
-    public int compare(Deposit deposit1, Deposit deposit2) {
-         int result = deposit1.getPayedInterest().compareTo(deposit2.getPayedInterest());
-        if(result>0)
-        return 0;
-
     }
 }

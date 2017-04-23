@@ -18,36 +18,67 @@ import java.util.*;
 public class ParsingXml{
     private List<Deposit> depositList = new ArrayList<>();
     private Deposit deposit = new Deposit();
+    public NodeList nodeList;
+    public int depositNum;
+
     public Document parseXmlFile() throws ParserConfigurationException, IOException, SAXException {
         File inputXml = new File("Deposit.xml");
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         return documentBuilder.parse(inputXml);
     }
+
     public List<Deposit> parseDocument(Document document) throws ClassNotFoundException,
             IllegalAccessException, InstantiationException, DepositTypeNotFoundException, WrongDepositBalanceException, WrongDurationInDayValueException {
         Element docElement = document.getDocumentElement();
-        NodeList nodeList = docElement.getElementsByTagName("deposit");
+        nodeList = docElement.getElementsByTagName("deposit");
         if (nodeList != null && nodeList.getLength() > 0) {
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                String customerNumber =docElement.getElementsByTagName("customerNumber").item(i).getTextContent();
-                String depositTypeStr = "depositType."+ docElement.getElementsByTagName("depositType").item(i).getTextContent();
-                Class depositTypeClass = Class.forName(depositTypeStr);
-                DepositType depositType = (depositType.DepositType)depositTypeClass.newInstance();
-                BigDecimal depositBalance = new BigDecimal(docElement.getElementsByTagName("depositBalance").item(i).getTextContent());
-                if (depositBalance.compareTo(BigDecimal.ZERO) < 0)
-                        throw new WrongDepositBalanceException("depositBalance can`t be negative at "+ i + 1 +"th deposit");
-                int durationInDays = Integer.parseInt(docElement.getElementsByTagName("durationInDays").item(i).getTextContent());
-                if (durationInDays <= 0)
-                        throw new WrongDurationInDayValueException("durationInDays can`t be zero or negative at 	"+ i + 1 +"th deposit");
-                deposit.setCustomerNumber(customerNumber);
-                deposit.setDepositType(depositType);
-                deposit.setDepositBalance(depositBalance);
-                deposit.setDurationInDays(durationInDays);
-                deposit.calculatePayedInterest();
-                depositList.add(deposit);
+            for ( depositNum = 0; depositNum < nodeList.getLength(); depositNum++) {
+                String customerNumber = docElement.getElementsByTagName("customerNumber").item(depositNum).getTextContent();
+                String depositTypeStr = "depositType." + docElement.getElementsByTagName("depositType").item(depositNum).getTextContent();
+                BigDecimal depositBalance = new BigDecimal(docElement.getElementsByTagName("depositBalance").item(depositNum).getTextContent());
+                int durationInDays = Integer.parseInt(docElement.getElementsByTagName("durationInDays").item(depositNum).getTextContent());
+               // try {
+                    checkDepositType(depositTypeStr);
+                   checkDepositBalance(depositBalance);
+                    checkDurationInDays(durationInDays);
+                    deposit.setCustomerNumber(customerNumber);
+                    deposit.setDepositBalance(depositBalance);
+                    deposit.setDurationInDays(durationInDays);
+                    deposit.calculatePayedInterest();
+                    depositList.add(deposit);
+                //}
+                /*
+                catch (DepositTypeNotFoundException e) {
+                    System.out.println("class not found////");
+                } catch (WrongDepositBalanceException e) {
+                    System.out.println("class not neg////");
+                } catch (WrongDurationInDayValueException e) {
+                    System.out.println("not neg and zero////");
+                } finally {
+                    continue;
+                }
+                */
             }
-        }return depositList;
+        } return depositList;
+    }
+    public void checkDepositBalance (BigDecimal depositBalance) throws WrongDepositBalanceException { if (depositBalance.compareTo(BigDecimal.ZERO) < 0)
+        throw new WrongDepositBalanceException("depositBalance can`t be negative ");}
+
+    public void checkDurationInDays (int durationInDays) throws WrongDurationInDayValueException {
+        if (durationInDays <= 0)
+            throw new WrongDurationInDayValueException("durationInDays can`t be zero or negative ");
+    }
+
+    public void checkDepositType(String depositTypeStr) throws IllegalAccessException, InstantiationException, ClassNotFoundException, DepositTypeNotFoundException {
+        try {
+            Class depositTypeClass = Class.forName(depositTypeStr);
+            DepositType depositType = (depositType.DepositType) depositTypeClass.newInstance();
+            deposit.setDepositType(depositType);
+        }catch(ClassNotFoundException e)
+        {
+            throw new  DepositTypeNotFoundException("");
+        }
     }
     public void writeOnFile(TreeMap<BigDecimal ,String> customerNumberMap) throws IOException {
         RandomAccessFile outputFile = new RandomAccessFile("Output.txt" , "rw");
