@@ -3,26 +3,24 @@ package deposits;
 import depositType.DepositType;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Comparator;
 
-/**
- * Created by dotinschool1 on 4/10/2017.
- */
-public class Deposit {
+public class Deposit implements Comparator{
 
     private String customerNumber;
-    DepositType depositType ;
+    private DepositType depositType ;
     private BigDecimal depositBalance;
     private int durationInDays;
+    private BigDecimal payedInterest ;
 
-    public String getCustomerNumber() {
-        return customerNumber;
+    public Deposit() {
     }
 
     public void setCustomerNumber(String customerNumber) {
         this.customerNumber = customerNumber;
     }
 
-    public BigDecimal getDepositBalance() {
+    private BigDecimal getDepositBalance() {
         return depositBalance;
     }
 
@@ -30,7 +28,7 @@ public class Deposit {
         this.depositBalance = depositBalance;
     }
 
-    public int getDurationInDays() {
+    private int getDurationInDays() {
         return durationInDays;
     }
 
@@ -38,29 +36,42 @@ public class Deposit {
         this.durationInDays = durationInDays;
     }
 
-    public DepositType getDepositType() {
-        return depositType;
-    }
-
     public void setDepositType(DepositType depositType) {
         this.depositType = depositType;
     }
 
-    public Deposit() {
+    public BigDecimal getPayedInterest() {
+        return payedInterest;
     }
 
-    public Deposit(String customerNumber, BigDecimal depositBalance, int durationInDays, DepositType depositType) {
-        this.customerNumber = customerNumber;
-        this.depositBalance = depositBalance;
-        this.durationInDays = durationInDays;
-        this.depositType = depositType;
+    public void setPayedInterest(BigDecimal payedInterest) {
+        this.payedInterest = payedInterest;
     }
-    public BigDecimal calculatePayedInterest(Deposit deposit) {
-        final int days = 6500;
-        BigDecimal payedInterest = new BigDecimal(1);
-        payedInterest = payedInterest.multiply(new BigDecimal(deposit.getDurationInDays()))
-                .multiply(deposit.getDepositBalance()).multiply(new BigDecimal(deposit.depositType.getInterestRate()));
-        payedInterest = payedInterest.divide(new BigDecimal(days), MathContext.DECIMAL64);
-        return payedInterest;
+
+    public Deposit(String customerNumber , BigDecimal payedInterest ,int durationInDays ,BigDecimal depositBalance , DepositType depositType) {
+        this.customerNumber = customerNumber;
+        this.durationInDays = durationInDays;
+        this.depositBalance = depositBalance;
+        this.depositType = depositType;
+        this.payedInterest = payedInterest;
+    }
+
+    public Deposit calculatePayedInterest() {
+        Deposit deposit = new Deposit();
+        final int DAYS = 36500;
+            payedInterest = depositBalance.multiply(new BigDecimal(durationInDays))
+                    .multiply(new BigDecimal(depositType.getInterestRate()));
+            payedInterest = payedInterest.divide(new BigDecimal(DAYS), MathContext.DECIMAL64);
+            //deposit.setPayedInterest(payedInterest);
+            System.out.println(payedInterest +"ali" + durationInDays + "abbas "+depositBalance );
+        return deposit;
+    }
+
+    @Override
+    public int compare(Deposit deposit1, Deposit deposit2) {
+         int result = deposit1.getPayedInterest().compareTo(deposit2.getPayedInterest());
+        if(result>0)
+        return 0;
+
     }
 }
