@@ -17,25 +17,12 @@ public class Main {
 
         ParsingXml parseXml = new ParsingXml();
       //  int j = parseXml.nodeList.getLength();
-        int i = parseXml.depositNum;
-        System.out.println(i);
-            Deposit deposit = new Deposit();
-        while (true){
-            try {
-                Document document = parseXml.parseXmlFile();
-                parseXml.parseDocument(document);
-            }
-            catch (DepositTypeNotFoundException e) {
-                System.out.println("class not found////");
-            } catch (WrongDepositBalanceException e) {
-                System.out.println("class not neg////");
-            } catch (WrongDurationInDayValueException e) {
-                System.out.println("not neg and zero////");
-            }
-            finally {
+      //  int i = parseXml.depositNum;
+        //System.out.println(i);
+        Deposit deposit = new Deposit();
+        Document document = parseXml.parseXmlFile();
+        parseXml.parseDocument(document);
 
-            }
-        }
 
         /*
        parseXml.writeOnFile(

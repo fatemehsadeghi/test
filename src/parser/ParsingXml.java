@@ -38,7 +38,7 @@ public class ParsingXml{
                 String depositTypeStr = "depositType." + docElement.getElementsByTagName("depositType").item(depositNum).getTextContent();
                 BigDecimal depositBalance = new BigDecimal(docElement.getElementsByTagName("depositBalance").item(depositNum).getTextContent());
                 int durationInDays = Integer.parseInt(docElement.getElementsByTagName("durationInDays").item(depositNum).getTextContent());
-               // try {
+                try {
                     checkDepositType(depositTypeStr);
                    checkDepositBalance(depositBalance);
                     checkDurationInDays(durationInDays);
@@ -47,8 +47,7 @@ public class ParsingXml{
                     deposit.setDurationInDays(durationInDays);
                     deposit.calculatePayedInterest();
                     depositList.add(deposit);
-                //}
-                /*
+                }
                 catch (DepositTypeNotFoundException e) {
                     System.out.println("class not found////");
                 } catch (WrongDepositBalanceException e) {
@@ -58,7 +57,6 @@ public class ParsingXml{
                 } finally {
                     continue;
                 }
-                */
             }
         } return depositList;
     }

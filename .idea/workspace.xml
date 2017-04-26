@@ -2,21 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8486ed67-7a1d-4fca-8746-391f10e990f6" name="Default" comment="edit">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Output.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/test/exception/DepositTypeNotFound.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/test/exception/WrongDepositBalance.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/test/exception/WrongDurationInDayValue.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/exception/DepositTypeNotFound.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/exception/WrongDepositBalance.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/exception/WrongDurationInDayValue.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/test/Main.class" afterPath="$PROJECT_DIR$/out/production/test/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/test/deposits/Deposit.class" afterPath="$PROJECT_DIR$/out/production/test/deposits/Deposit.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/test/parser/ParsingXml.class" afterPath="$PROJECT_DIR$/out/production/test/parser/ParsingXml.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Deposit.xml" afterPath="$PROJECT_DIR$/Deposit.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/deposits/Deposit.java" afterPath="$PROJECT_DIR$/src/deposits/Deposit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exception/DepositTypeNotFoundException.java" afterPath="$PROJECT_DIR$/src/exception/DepositTypeNotFoundException.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/parser/ParsingXml.java" afterPath="$PROJECT_DIR$/src/parser/ParsingXml.java" />
     </list>
     <ignored path="test.iws" />
@@ -43,7 +32,7 @@
       <file leaf-file-name="Deposit.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/deposits/Deposit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
+            <state relative-caret-position="731">
               <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -62,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+            <state relative-caret-position="459">
+              <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -74,14 +63,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ParsingXml.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ParsingXml.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/parser/ParsingXml.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+            <state relative-caret-position="408">
+              <caret line="58" column="17" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
               <folding>
                 <element signature="method#parseXmlFile#0;class#ParsingXml#0" expanded="false" />
-                <marker date="1493206000766" expanded="false" signature="4306:4783" placeholder="{...}" />
+                <element signature="method#writeOnFile#0;class#ParsingXml#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -187,7 +176,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -295,6 +283,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -821,12 +810,13 @@
       <workItem from="1492600765466" duration="794000" />
       <workItem from="1492832939832" duration="12444000" />
       <workItem from="1492942751494" duration="631000" />
-      <workItem from="1493176809616" duration="19509000" />
+      <workItem from="1493176809616" duration="19585000" />
+      <workItem from="1493206670983" duration="107000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153992000" />
+    <option name="totallyTimeSpent" value="154175000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -849,7 +839,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30645162" sideWeight="0.5051414" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30645162" sideWeight="0.49485862" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30645162" sideWeight="0.49485862" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1072,32 +1062,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MyXml.java" />
-    <entry file="file://$PROJECT_DIR$/src/exception/WrongDurationInDayValue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="52" selection-start-line="6" selection-start-column="52" selection-end-line="6" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/exception/DepositTypeNotFound.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exception/WrongDurationInDayValue.java" />
+    <entry file="file://$PROJECT_DIR$/src/exception/DepositTypeNotFound.java" />
     <entry file="file://$PROJECT_DIR$/src/temp" />
     <entry file="file://$PROJECT_DIR$/src/interest/DepositInterest.java" />
     <entry file="file://$PROJECT_DIR$/src/MyXml.java" />
     <entry file="file://$PROJECT_DIR$/Output.txt" />
     <entry file="file://$PROJECT_DIR$/src/Output.xml" />
-    <entry file="file://$PROJECT_DIR$/src/exception/WrongDepositBalance.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exception/WrongDepositBalance.java" />
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_20/src.zip!/java/io/DataInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -1147,7 +1119,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1161,7 +1132,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/deposits/Deposit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
+        <state relative-caret-position="731">
           <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1177,23 +1148,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/ParsingXml.java">
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+        <state relative-caret-position="459">
+          <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
           <folding>
-            <element signature="method#parseXmlFile#0;class#ParsingXml#0" expanded="false" />
-            <marker date="1493206000766" expanded="false" signature="4306:4783" placeholder="{...}" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/parser/ParsingXml.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+        <state relative-caret-position="408">
+          <caret line="58" column="17" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#parseXmlFile#0;class#ParsingXml#0" expanded="false" />
+            <element signature="method#writeOnFile#0;class#ParsingXml#0" expanded="false" />
           </folding>
         </state>
       </provider>
