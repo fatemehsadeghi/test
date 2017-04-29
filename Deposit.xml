@@ -1,7 +1,7 @@
 <deposits>
     <deposit >
         <customerNumber>534900</customerNumber>
-        <depositType>gggShortTermDeposit</depositType>
+        <depositType>ShortTermDeposit</depositType>
         <depositBalance>200000</depositBalance>
         <durationInDays>25</durationInDays>
     </deposit>

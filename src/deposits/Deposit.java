@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Comparator;
 
-public class Deposit {
+public class Deposit{
 
     private String customerNumber;
     private DepositType depositType ;
@@ -18,6 +18,14 @@ public class Deposit {
 
     public void setCustomerNumber(String customerNumber) {
         this.customerNumber = customerNumber;
+    }
+
+    public String getCustomerNumber() {
+        return customerNumber;
+    }
+
+    public DepositType getDepositType() {
+        return depositType;
     }
 
     private BigDecimal getDepositBalance() {
@@ -56,14 +64,11 @@ public class Deposit {
         this.payedInterest = payedInterest;
     }
 
-    public Deposit calculatePayedInterest() {
-        Deposit deposit = new Deposit();
+    public void calculatePayedInterest() {
         final int DAYS = 36500;
-            payedInterest = depositBalance.multiply(new BigDecimal(durationInDays))
+        payedInterest = depositBalance.multiply(new BigDecimal(durationInDays))
                     .multiply(new BigDecimal(depositType.getInterestRate()));
-            payedInterest = payedInterest.divide(new BigDecimal(DAYS), MathContext.DECIMAL64);
-            //deposit.setPayedInterest(payedInterest);
-            System.out.println(payedInterest +"ali" + durationInDays + "abbas "+depositBalance );
-        return deposit;
+        payedInterest = payedInterest.divide(new BigDecimal(DAYS), MathContext.DECIMAL64);
     }
+
 }
