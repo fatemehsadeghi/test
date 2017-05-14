@@ -17,6 +17,5 @@ public class Main {
                 Document document = xmlParser.parseXmlFile();
                 List<Deposit>depositList = xmlParser.parseDocument(document);
                 xmlParser.writeOnFile(depositList);
-
     }
 }
